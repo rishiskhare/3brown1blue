@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+media/
+final/
+say.wav
+.DS_Store
