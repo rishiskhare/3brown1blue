@@ -33,10 +33,11 @@ This skill specifically gives the agent four things:
 ## How it works
 
 1. **Plan:** The agent finds the question, the aha and one concrete example, then storyboards 15–60 s scenes.
-2. **Write:** It writes ordinary ManimCE code with the kit's helpers: `tex(..., t2c=...)` colors terms safely, `TransformTex` rearranges equations, `FromCopy` flies a term from where it came from, and there are cards, captions and `voiceover()` blocks.
-3. **Check:** `render.py --check` runs every scene with animations skipped and reports every LaTeX and Python error plus the layout warnings in one pass. For a 3-minute video that takes about 4 s.
-4. **Draft and look:** It renders a 480p draft with a contact sheet per scene, reads the sheets and fixes what it sees. Re-renders are incremental: unchanged scenes are reused, so a fix costs only the scene it touches.
-5. **Final:** It renders 1080p30, Grant's frame rate, with each clip graded as it finishes and joined without re-encoding. A 3-minute video takes about 20 s on an M1 Max.
+2. **Review:** A fresh subagent that never saw the agent's reasoning reads the plan cold. It explains the video back, finds where a viewer would get lost, checks the math and returns ranked fixes before any code is written.
+3. **Write:** It writes ordinary ManimCE code with the kit's helpers: `tex(..., t2c=...)` colors terms safely, `TransformTex` rearranges equations, `FromCopy` flies a term from where it came from, and there are cards, captions and `voiceover()` blocks.
+4. **Check:** `render.py --check` runs every scene with animations skipped and reports every LaTeX and Python error plus the layout warnings in one pass. For a 3-minute video that takes about 4 s.
+5. **Draft and look:** It renders a 480p draft with a contact sheet per scene, reads the sheets and fixes what it sees, then a fresh reviewer checks the sheets once more. Re-renders are incremental: unchanged scenes are reused, so a fix costs only the scene it touches.
+6. **Final:** It renders 1080p30, Grant's frame rate, with each clip graded as it finishes and joined without re-encoding. A 3-minute video takes about 20 s on an M1 Max.
 
 ## Requirements
 
@@ -71,7 +72,7 @@ skills/3brown1blue/
 ├── templates/    the style kit (tbb.py), a scene skeleton and manim.cfg
 ├── scripts/      check_env.py, render.py (check, render, sheets, grade, join, --voice), narrate.py, style_lint.py
 ├── examples/     a complete ~73 s video
-└── references/   pedagogy, style guide, tested idioms, gotchas, ManimGL porting, narration
+└── references/   pedagogy, style guide, tested idioms, gotchas, ManimGL porting, narration, review brief
 tests/            unit tests and selftest.py (runs every idioms.md recipe, the example and the template)
 ```
 

@@ -13,6 +13,8 @@ Storyboard
 | Aha      | ...      | ...                             | ...                              |   |
 | Takeaway | summary  | boxed result                    | <one-line takeaway>              | 6 |
 
+Script (narrated videos only: the full narration, one paragraph per voiceover block)
+
 Render:  python3 <skill>/scripts/render.py <this file> --check        (seconds: all errors + stills)
          python3 <skill>/scripts/render.py <this file> --sheet        (draft, inspect the new sheets)
          python3 <skill>/scripts/render.py <this file> -q h --fps 30  (final)

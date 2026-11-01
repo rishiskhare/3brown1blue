@@ -19,6 +19,7 @@ It is unofficial, "in the style of" only. **Never recreate the Pi creatures or t
 - `gotchas.md`: ManimCE 0.22 bugs and their workarounds
 - `manimgl-to-ce.md`: porting ManimGL code
 - `narration.md` (pipeline, API, troubleshooting) and `narration-style.md` (how Grant writes narration): when the user wants audio
+- `review.md`: how to run the fresh-eyes reviews of the plan and the draft, and the brief to hand the reviewer
 
 `templates/` holds the kit (`tbb.py`), `manim.cfg` and `scene_template.py`. `scripts/` holds `check_env.py` and `render.py`, which renders, writes contact sheets, joins, grades and (with `--voice`) narrates.
 
@@ -92,10 +93,12 @@ If manim is missing, `uv venv && uv pip install "manim>=0.22.1"` (check_env prin
 
 ### 1. Find the one "aha" and plan it
 
-Before writing any code, pin down the question, the aha, one concrete example and the arc, then storyboard (both in `pedagogy.md`). Make each scene 15–60 s and one class, listed in a module-level `SCENES = [...]`. Show the storyboard to the user only if the scope is ambiguous.
+Before writing any code, pin down the question, the aha, one concrete example and the arc, then storyboard (both in `pedagogy.md`). Write the plan into `video.py`'s docstring, which the template lays out. Make each scene one class, listed in a module-level `SCENES = [...]`. **Split any scene longer than 60 s:** long scenes pace badly, and scenes render in parallel, so the longest one sets the render time. Show the storyboard to the user only if the scope is ambiguous.
 
 - *Silent* (the default): one caption per beat via `self.caption()`.
-- *Narrated* (the user wants audio): run `python3 <skill>/scripts/narrate.py setup` once per machine (~2 GB), read `references/narration-style.md` and write the full script in Grant's register. Then animate inside `self.voiceover(paragraph)` blocks. Never narrate caption fragments: they sound robotic.
+- *Narrated* (the user wants audio): run `python3 <skill>/scripts/narrate.py setup` once per machine (~2 GB), read `references/narration-style.md` and write the full script in Grant's register, under the storyboard in the docstring. Then animate inside `self.voiceover(paragraph)` blocks. Never narrate caption fragments: they sound robotic.
+
+**Have the plan reviewed before writing scene code** (`references/review.md`): a fresh-context subagent reads only the files, explains the video back, checks the math and returns ranked findings. Triage them as that file says, then implement. Skip the review for a single-scene clip.
 
 ### 2. Implement
 
@@ -120,7 +123,8 @@ python3 <skill>/scripts/render.py video.py --sheet     # 480p draft + contact sh
 - **Run `--check` first** after every edit. It skips animations, reports *every* LaTeX error and the first Python error of each scene in one pass, prints the layout warnings and saves each scene's last frame (open those PNGs for a quick look). A formula with a LaTeX error is drawn as `?`, so code that indexes into it may report a follow-on error: fix the LaTeX first. Then render.
 - **Renders are incremental:** scenes whose code and settings are unchanged are `reused`, so re-running the whole file costs only what changed. A scene re-renders when its class, a class it uses, module-level code, an imported local module (`tbb.py`, helpers) or any other file in the project folder (images, data, `manim.cfg`) changes; `--force` re-renders everything.
 - **Read the contact sheets listed under `New sheets:`** (`media/sheets/video/<Scene>.png`, 12 frames each); the others haven't changed. Fix every `layout:` warning. Look for overlaps, off-frame text, captions over content, ugly in-between frames, inconsistent colours, too much motion at once, and dead air.
-- **Batch your fixes** into one edit per iteration.
+- **Batch your fixes** into one edit per iteration, then re-run `--check` before opening any still: only `--check` refreshes the stills, so the old PNGs still show the bug.
+- **Review the draft once** when it renders with no errors and every `layout:` warning is fixed or knowingly accepted: run the draft gate of `references/review.md` on the contact sheets, triage the findings, then do the final render.
 - **With `--voice`, captions go to the `.srt` only** and the caption-collision audit is skipped. If the user wants captions burned in, pass `--captions` to the drafts and the final alike.
 - **If a scene fails,** render.py prints the error with the failing line of `video.py`, or for LaTeX the TeX error and the formula, with `|` marking piece boundaries. Fix it from that output.
 
