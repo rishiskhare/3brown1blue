@@ -24,6 +24,8 @@ Then ask in plain words:
 
 Your agent plans the explanation, writes the [Manim](https://www.manim.community/) scenes, checks its own frames and hands you an MP4: silent with captions, or narrated by a voice model that runs on your machine.
 
+Ask from any folder. Unless you're already in that video's folder, the agent makes a new one named after the topic and keeps everything in it.
+
 ## Why
 
 Ask an agent for a Manim video without guidance and it reaches for ManimCE's defaults: arrow-tipped axes, the wrong fonts, colors chosen frame by frame, text that runs off the edge, a formula before the picture it summarizes. It can't see its own output either, so it doesn't notice.

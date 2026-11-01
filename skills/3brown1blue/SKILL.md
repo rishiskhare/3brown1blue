@@ -80,7 +80,7 @@ Conventions: the target comes first, then the text (`label(mob, s)`, `brace_labe
 
 ### 0. Set up (once per project)
 
-Work in the project folder. Run the skill's scripts by path from there; never copy or `cd` into `<skill>/scripts/`.
+**Pick the project folder first.** If the current folder already holds this video (a `tbb.py` and a scene file that imports it), work there. Otherwise, for instance in the home folder or another project's repo, create a new folder named after the topic (e.g. `derivative-of-x-squared/`), `cd` into it, tell the user its path, and keep every file of the video inside it. Run the skill's scripts by path from that folder; never copy or `cd` into `<skill>/scripts/`.
 
 ```bash
 python3 <skill>/scripts/check_env.py [--python .venv/bin/python]   # apply each fix: line for a FAIL
