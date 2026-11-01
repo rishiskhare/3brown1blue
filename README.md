@@ -1,16 +1,12 @@
-<h1 align="center">3brown1blue</h1>
+# 3brown1blue
 
-<p align="center"><strong>Ask your coding agent for a math explainer. Get a 3Blue1Brown-style video.</strong></p>
+**Ask your coding agent for a math explainer. Get a 3Blue1Brown-style video.**
 
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-24292f?style=flat-square" alt="MIT license" /></a>
-  <img src="https://img.shields.io/badge/Manim_Community-0.22-58C4DD?style=flat-square" alt="Manim Community 0.22" />
-  <img src="https://img.shields.io/badge/Agent_Skill-Claude_Code_%7C_Codex_%7C_Cursor-7C3AED?style=flat-square" alt="An Agent Skill for Claude Code, Codex, Cursor and other hosts" />
-</p>
+![MIT license](https://img.shields.io/badge/license-MIT-24292f?style=flat-square)![Manim Community 0.22](https://img.shields.io/badge/Manim_Community-0.22-58C4DD?style=flat-square)![An Agent Skill for Claude Code, Codex, Cursor and other hosts](https://img.shields.io/badge/Agent_Skill-Claude_Code_%7C_Codex_%7C_Cursor-7C3AED?style=flat-square)
 
-<p align="center"><sub>Unofficial: not affiliated with or endorsed by 3Blue1Brown or Grant Sanderson. It makes videos <em>in the style of</em> 3Blue1Brown.</sub></p>
+Unofficial: not affiliated with or endorsed by 3Blue1Brown or Grant Sanderson. It makes videos *in the style of* 3Blue1Brown.
 
-<!-- Demo GIF goes here -->
+
 
 ```bash
 npx skills add rishiskhare/3brown1blue -g
@@ -28,22 +24,19 @@ Ask from any folder. Unless you're already in that video's folder, the agent mak
 
 ## Why
 
-Ask an agent for a Manim video without guidance and it reaches for ManimCE's defaults: arrow-tipped axes, the wrong fonts, colors chosen frame by frame, text that runs off the edge, a formula before the picture it summarizes. It can't see its own output either, so it doesn't notice.
+This skill specifically gives the agent four things:
 
-3brown1blue gives the agent four things:
-
-- **The look.** Grant's exact palette, Computer Modern type, his LaTeX preamble, his easing curve, thin strokes, backstroked labels and the 1.5× saturation grade from his pipeline. It all comes from one `from tbb import *`.
-- **The teaching.** One "aha" per video, a concrete example before the abstraction, the picture before the formula, one color per idea. These rules come from Grant's own talks and interviews, along with a storyboard format.
-- **A voice (optional).** The agent writes the narration the way Grant talks, and a style check compares the script with numbers measured from 14 of his videos. It's spoken locally by [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M), and animations land on the exact word (`v.wait_until("the corner")`). Every clip is checked by Whisper, the mix is −16 LUFS, and you get `.srt` subtitles. No API key, no cloud.
-- **Self-review.** A layout audit flags anything off-frame or under a caption, and contact sheets let the agent *look at* every scene before you do.
+- **3b1b inspired appearance:** Grant's color palette, Computer Modern font, LaTeX preamble, easing curve, thin strokes, backstroked labels and the 1.5× saturation grade.
+- **Grant's teaching philosophy:** One "aha" moment per video, a concrete example before the abstraction, the picture before the formula, one color per idea. These rules come from Grant's own talks and interviews, along with a storyboard format.
+- **A voice (optional).** The agent writes the narration and it's spoken locally by the on-device [Kokoro](https://huggingface.co/hexgrad/Kokoro-82M) text-to-speech model and animations land on the exact word. Every clip is checked by Whisper, the mix is −16 LUFS, and you get `.srt` subtitles.
 
 ## How it works
 
-1. **Plan.** The agent finds the question, the aha and one concrete example, then storyboards 15–60 s scenes.
-2. **Write.** It writes ordinary ManimCE code with the kit's helpers: `tex(..., t2c=...)` colors terms safely, `TransformTex` rearranges equations, `FromCopy` flies a term from where it came from, and there are cards, captions and `voiceover()` blocks.
-3. **Check.** `render.py --check` runs every scene with animations skipped and reports every LaTeX and Python error plus the layout warnings in one pass. For a 3-minute video that takes about 4 s.
-4. **Draft and look.** It renders a 480p draft with a contact sheet per scene, reads the sheets and fixes what it sees. Re-renders are incremental: unchanged scenes are reused, so a fix costs only the scene it touches.
-5. **Final.** It renders 1080p30, Grant's frame rate, with each clip graded as it finishes and joined without re-encoding. A 3-minute video takes about 20 s on an M1 Max.
+1. **Plan:** The agent finds the question, the aha and one concrete example, then storyboards 15–60 s scenes.
+2. **Write:** It writes ordinary ManimCE code with the kit's helpers: `tex(..., t2c=...)` colors terms safely, `TransformTex` rearranges equations, `FromCopy` flies a term from where it came from, and there are cards, captions and `voiceover()` blocks.
+3. **Check:** `render.py --check` runs every scene with animations skipped and reports every LaTeX and Python error plus the layout warnings in one pass. For a 3-minute video that takes about 4 s.
+4. **Draft and look:** It renders a 480p draft with a contact sheet per scene, reads the sheets and fixes what it sees. Re-renders are incremental: unchanged scenes are reused, so a fix costs only the scene it touches.
+5. **Final:** It renders 1080p30, Grant's frame rate, with each clip graded as it finishes and joined without re-encoding. A 3-minute video takes about 20 s on an M1 Max.
 
 ## Requirements
 
@@ -65,8 +58,6 @@ The installer asks which agents to install for; `-a claude-code -y` skips the qu
 ## FAQ
 
 **Is this ManimGL, Grant's own Manim?** No. It uses Manim Community, which has releases, docs and a renderer that runs headless anywhere. The kit reproduces ManimGL's look on top of it.
-
-**Can I use the videos commercially?** The skill is MIT and the videos you make are yours. It contains no code from [3b1b/videos](https://github.com/3b1b/videos), which is non-commercial, and it tells agents never to draw the Pi creatures or the 3b1b logo.
 
 **Which agents does it work with?** Any agent that reads [Agent Skills](https://skills.sh) and can run shell commands. It's developed and tested with Claude Code on macOS and Linux.
 
@@ -95,6 +86,6 @@ python tests/selftest.py -j 4            # runs every idioms.md recipe, the exam
 
 MIT (see `LICENSE`; the installed skill carries the same text as `LICENSE.txt`).
 
-- **3Blue1Brown:** the skill describes the style and reimplements it independently. Its style numbers (stroke widths, timings, color use) were measured from [3b1b/videos](https://github.com/3b1b/videos), and none of that code is included. The palette values and the "smooth" easing match [3b1b/manim](https://github.com/3b1b/manim) (MIT). The Pi creatures and the logo are copyrighted, and the skill tells agents not to recreate them.
+- **3Blue1Brown:** the skill describes the style and reimplements it independently. Its style numbers (stroke widths, timings, color use) were measured from [3b1b/videos](https://github.com/3b1b/videos), and none of that code is included. The palette values and the "smooth" easing match [3b1b/manim](https://github.com/3b1b/manim) (MIT). The Pi creatures and the logo are copyrighted, and the skill tells agents not to recreate them. The skill is MIT and contains no code from [3b1b/videos](https://github.com/3b1b/videos), which is non-commercial, and it tells agents never to draw the Pi creatures or the 3b1b logo.
 - **Grant Sanderson's words:** `pedagogy.md` and `narration-style.md` quote short excerpts from his videos and interviews for commentary (© Grant Sanderson / 3Blue1Brown). The sources are the [3Blue1Brown channel](https://www.youtube.com/@3blue1brown), the Lex Fridman Podcast [#64](https://www.youtube.com/watch?v=U_lKUK2MCsg) and #118, the [SoME1](https://www.youtube.com/watch?v=F3Qixy-r_rQ) and [SoME2](https://www.youtube.com/watch?v=cDofhN-RJqg) results, and ["Advice for using Manim"](https://www.youtube.com/watch?v=ruUfqQPDdDs).
 - **Models:** [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (Apache-2.0) for narration and [faster-whisper](https://github.com/SYSTRAN/faster-whisper) (MIT) for transcription checks.
